@@ -5,3 +5,4 @@ django-allauth>=0.44,<1.0
 django-rest-auth>=0.9.5,<1.0
 djangorestframework-simplejwt>=5.0,<6.0
 django-phonenumber-field
+django-rest-passwordreset
