@@ -1,55 +1,49 @@
+from datetime import datetime 
+from config_master import TZ
+
 from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
+from utils import generate_random_string
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    description = models.CharField(max_length=100, default='')
-    city = models.CharField(max_length=100, default='')
-    website = models.URLField(default='')
-    phone = models.IntegerField(default=0)
-    image = models.ImageField(upload_to='profile_image', blank=True)
 
-    def __str__(self):
-        return self.user.username
-      
-class OTP(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    otp = models.IntegerField()
-    count = models.IntegerField(default=0)
+class BaseModel(models.Model):
+    """
+    This is the base model for all models in the application
+    """
     created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()
-    
-    def __str__(self):
-        return self.user.username
-      
-    def is_valid(self):
-        return self.count < 3 and self.expires_at > timezone.now()
-      
-    @staticmethod
-    def get_valid_otp(user):
-        otp = OTP.objects.filter(user=user).order_by('-created_at').first()
-        if otp and otp.is_valid():
-            return otp
-        return None
-      
-class SendEmail(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    email = models.EmailField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.user.username
-    def is_valid(self):
-        return self.created_at > timezone.now() - timezone.timedelta(days=1)
-class VerifyEmail(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    email = models.EmailField()
-    token = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.user.username
-    def is_valid(self):
-        return self.created_at > timezone.now() - timezone.timedelta(days=1)
-      
+    created_by = models.CharField(max_length=500, default='', null=True)
+    modified_at = models.DateTimeField(auto_now_add=True)
+    modified_by = models.CharField(max_length=500, default='', null=True)
+    class Meta:
+        abstract = True
+        
+        
+        
+def unique_id_generator(id_string: str = None) -> str:
+  """
+  This method generates a unique id for the model
+  :param id_string: The string to be used as a prefix
+  :return: str
+  """
+  if id_string:
+    id_string_split = id_string.split('_')
+    increment_value = id_string_split[-1]
+    increment_value = int(increment_value) + 1
+    return f'{str(id_string_split[0])}-{str(increment_value)}'
+  now = datetime.now(TZ)
+  time_string = now.strftime('%Y%m%d%H%M%S')
+  return f'{time_string}{str(generate_random_string(4))}-0'
+        
+        
+def generate_unigue_id(instance) -> str:
+  """
+  This method generates a unique id for the model
+  :param instance: The model instance
+  :return: str
+  """
+  unique_id = unique_id_generator().upper()
+  Kclass = instance.__class__
+  qs_exists = Kclass.objects.filter(unique_id=unique_id).exists()
+  if qs_exists:
+    return generate_unigue_id(instance)
+  return unique_id
+        

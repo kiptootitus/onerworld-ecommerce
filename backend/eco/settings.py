@@ -24,6 +24,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',  # CORS headers
+    'rest_framework',  # DRF
+    'rest_framework.authtoken',  # Token authentication
+    'rest_framework_simplejwt.token_blacklist',  # Token blacklist for JWT
+    'django-allauth',  # Allauth for authentication
+    'rest_auth',  # Django Rest Auth
     'vendor',
     'oneworld',
     'orders',
@@ -35,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # CORS headers
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
