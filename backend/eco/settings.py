@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'corsheaders',  # CORS headers
     'rest_framework',  # DRF
     'rest_framework.authtoken',  # Token authentication
+    'phonenumber_field',
     'rest_framework_simplejwt.token_blacklist',  # Token blacklist for JWT
     'rest_auth',  # Django Rest Auth
     'vendor',

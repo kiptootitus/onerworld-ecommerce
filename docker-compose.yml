@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+    oneworld-backend:
+      hostname: oneworld-backend
+      build:
+        dockerfile: Dockerfile
+        context: ./images/Oneworld_backend
+        target: ${ENVIRONMENT}
