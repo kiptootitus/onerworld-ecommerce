@@ -1,9 +1,39 @@
-version: '3.9'
+version: '3.8'
 
 services:
-    oneworld-backend:
-      hostname: oneworld-backend
-      build:
-        dockerfile: Dockerfile
-        context: ./images/Oneworld_backend
-        target: ${ENVIRONMENT}
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - backend_data:/app  # Persist backend data (if any)
+    ports:
+      - "8000:8000"
+    networks:
+      - my_network  # Connect to the custom network
+
+  frontend:
+    build:
+      context: ./frontend/oneworld
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    networks:
+      - my_network  # Connect to the custom network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    depends_on:
+      - frontend
+    ports:
+      - "80:80"
+    networks:
+      - my_network  # Connect to the custom network
+
+volumes:
+  backend_data:  # Declare a volume for the backend service
+
+networks:
+  my_network:  # Create a custom network for all services
