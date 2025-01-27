@@ -7,4 +7,5 @@ djangorestframework-simplejwt>=5.0,<6.0
 django-phonenumber-field
 django-rest-passwordreset
 pytz
-
+phonenumbers
+drf-yasg

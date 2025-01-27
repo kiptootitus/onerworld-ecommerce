@@ -1,0 +1,60 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 500 200"
+  width="700"
+  height="500"
+>
+  <!-- Globe Background -->
+  <circle
+    cx="250"
+    cy="100"
+    r="80"
+    fill="none"
+    stroke="#FFD700"
+    stroke-width="6"
+  />
+  <!-- Globe Latitude Lines -->
+  <path
+    d="M170 100 Q250 60 330 100 Q250 140 170 100"
+    fill="none"
+    stroke="#FFD700"
+    stroke-width="6"
+  />
+  <!-- Globe Longitude Lines -->
+  <path
+    d="M250 20 A80 80 0 0 1 250 180"
+    fill="none"
+    stroke="#FFD700"
+    stroke-width="1"
+  />
+  <path
+    d="M250 20 A80 80 10 0 0 250 180"
+    fill="none"
+    stroke="#FFD700"
+    stroke-width="15"
+  />
+
+  <!-- Text Background -->
+  <rect
+    x="150"
+    y="450"
+    width="200"
+    height="50"
+    rx="10"
+    fill="#FFD700"
+  />
+
+  <!-- Text 'OneWorld' -->
+  <text
+    x="250"
+    y="110"
+    font-family="Arial, sans-serif"
+    font-size="30"
+    font-weight="bold"
+    fill="#FFFFFF"
+    text-anchor="middle"
+    alignment-baseline="middle"
+  >
+    OneWorld
+  </text>
+</svg>

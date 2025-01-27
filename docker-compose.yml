@@ -33,7 +33,7 @@ services:
       - my_network  # Connect to the custom network
 
 volumes:
-  backend_data:  # Declare a volume for the backend service
+  backend_data:  # Declare a volume for the backend Service
 
 networks:
   my_network:  # Create a custom network for all services
